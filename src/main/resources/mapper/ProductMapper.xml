@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pku.mapper.ProductMapper">
+
+    <insert id="insert">
+        insert into products (product_name, price, stock) values
+        (#{productName}, #{price}, #{stock})
+    </insert>
+    <update id="update">
+        update products
+        <set>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="stock != null">stock = #{stock},</if>
+        </set>
+        where product_id = #{productId}
+    </update>
+</mapper>

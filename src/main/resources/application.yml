@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: Classic_Seckill
+  datasource:
+    url: ${seckill.spring.datasource.url}
+    username: ${seckill.spring.datasource.username}
+    password: ${seckill.spring.datasource.password}
+  profiles:
+    active: dev
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 10
+      database: 1
+      password: 111111
+  thymeleaf:
+    check-template-location: false
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        prefetch: 1
+        auto-startup: true
+        default-requeue-rejected: true
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          max-interval: 10000
+          multiplier: 1.0
+
+logging:
+  level:
+    com:
+      pku:
+        mapper: debug
+        service: info
+        controller:
+seckill:
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: ${seckill.jwt.admin-secret-key}
+    # 设置jwt过期时间
+    admin-ttl: ${seckill.jwt.admin-ttl}
+    # 设置前端传递过来的令牌名称
+    admin-token-name: ${seckill.jwt.admin-token-name}
+    user-secret-key: the program is made by archester
+    user-ttl: 7200000
+    user-token-name: authentication
+mybatis:
+  #mapper配置文件
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.pku.entity
+  configuration:
+    #开启驼峰命名
+    map-underscore-to-camel-case: true
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
